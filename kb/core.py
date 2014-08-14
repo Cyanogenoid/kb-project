@@ -2,7 +2,7 @@ import abc
 from collections import namedtuple
 
 
-Key = namedtuple('Key', ['x', 'y'])
+Key = namedtuple('Key', ['y', 'x'])
 
 
 class Keyboard(metaclass=abc.ABCMeta):
