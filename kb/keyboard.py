@@ -9,8 +9,8 @@ class StandardKeyboard(Keyboard):
 
     """
     def __init__(self):
-        self.unit_height = 19.05
-        self.unit_width = 19.05
+        self.unit_height = Decimal('19.05')
+        self.unit_width = Decimal('19.05')
         self.separator = '|'
         self.comment = '-'
 
@@ -25,9 +25,9 @@ class StandardKeyboard(Keyboard):
             offset_x = Decimal(0)
             for key in line.strip(self.separator).split(self.separator):
                 keys.add(Key(x=offset_x, y=offset_y))
-                unit = len(key) * 0.25 + 1
-                offset_x = offset_x.add(Decimal(self.unit_width * unit))
-            offset_y = offset_y.add(Decimal(self.unit_height))
+                unit = Decimal(len(key) * 0.25 + 1)
+                offset_x += Decimal(self.unit_width * unit)
+            offset_y += Decimal(self.unit_height)
         return keys
 
     @abc.abstractproperty
