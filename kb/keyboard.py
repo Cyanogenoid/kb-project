@@ -54,3 +54,18 @@ class ANSI(StandardKeyboard):
 |    |    |    |                        |    |    |    |    |
 -------------------------------------------------------------
         """
+
+
+class SixKey(StandardKeyboard):
+    def __init__(self):
+        super().__init__()
+
+    @property
+    def schema(self):
+        return """\
+-------------
+|   |   |   |
+-------------
+|   |   |   |
+-------------
+        """
