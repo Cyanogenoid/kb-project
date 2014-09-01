@@ -4,7 +4,11 @@ from core import Actor
 
 
 class SingleFinger(Actor):
-    def evaluate(self, keyboard, layout, corpus):
+    def evaluate(self, keyboard, layout, alphabet, corpus):
+        # use the keys of the keyboard
+        keys = keyboard.keys
+        # create the lookup map
+        mapping = dict(zip(alphabet, (keys[i] for i in layout)))
         # start out with no effort
         effort = 0.0
         # process corpus
@@ -16,7 +20,7 @@ class SingleFinger(Actor):
             # try to type out all characters
             for character in n_gram:
                 try:
-                    target = layout[character]
+                    target = mapping[character]
                 except KeyError:
                     # corpus can't be typed out with layout
                     return float('+inf')

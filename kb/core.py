@@ -24,7 +24,7 @@ class Actor(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def evaluate(self, keyboard, layout, corpus):
+    def evaluate(self, keyboard, layout, alphabet, corpus):
         """ Calculate how much effort the actor has to exert to type the corpus using the layout.
 
         :param keyboard: The keyboard the layout is applied to.

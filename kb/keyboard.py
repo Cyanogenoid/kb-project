@@ -13,10 +13,18 @@ class StandardKeyboard(Keyboard):
         self.unit_width = Decimal('19.05')
         self.separator = '|'
         self.comment = '-'
+        self._keys = None
+
 
     @property
     def keys(self):
-        keys = set()
+        if self._keys == None:
+            self._keys = self.load_schema()
+        return self._keys
+
+
+    def load_schema(self):
+        keys = list()
         offset_y = Decimal(0)
         for line in self.schema.splitlines():
             # don't process lines starting with the comment prefix
@@ -24,11 +32,12 @@ class StandardKeyboard(Keyboard):
                 continue
             offset_x = Decimal(0)
             for key in line.strip(self.separator).split(self.separator):
-                keys.add(Key(x=offset_x, y=offset_y))
+                keys.append(Key(x=offset_x, y=offset_y))
                 unit = Decimal(len(key) * 0.25 + 1)
                 offset_x += Decimal(self.unit_width * unit)
             offset_y += Decimal(self.unit_height)
         return keys
+
 
     @abc.abstractproperty
     def schema(self):
