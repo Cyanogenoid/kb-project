@@ -3,6 +3,7 @@ import itertools
 import random
 
 from deap import base, creator, tools, algorithms
+from nltk.corpus import brown
 
 import actor
 import keyboard
@@ -19,13 +20,15 @@ def n_wise(iterable, n):
 
 ### INTERNAL Stuff ###
 
-kb = keyboard.SixKey()
+kb = keyboard.Core33()
 keys = sorted(kb.keys)
 ac = actor.SingleFinger()
-alphabet = 'abcdef'
+alphabet = "abcdefghijklmnopqrstuvwxyz"
 
-text = ''.join(random.choice(alphabet) for _ in range(2**10))
-corpus = collections.Counter(n_wise(text, 2))
+alphabet_set = set(alphabet)
+
+text = itertools.chain.from_iterable(map(str.lower, brown.words()))
+corpus = collections.Counter(n_wise(filter(lambda c: c in alphabet_set, text), 2))
 
 
 ### DEAP Stuff ###
