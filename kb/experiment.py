@@ -8,11 +8,13 @@ import actor
 import keyboard
 
 
-def pairwise(iterable):
-    "s -> (s0,s1), (s1,s2), (s2, s3), ..."
-    a, b = itertools.tee(iterable)
-    next(b, None)
-    return zip(a, b)
+def n_wise(iterable, n):
+    iterables = itertools.tee(iterable, n)
+    for i in range(1, n):
+        to_be_advanced = iterables[i]
+        for _ in range(i):
+            next(to_be_advanced, None)
+    return zip(*iterables)
 
 
 ### INTERNAL Stuff ###
@@ -23,7 +25,7 @@ ac = actor.SingleFinger()
 alphabet = 'abcdef'
 
 text = ''.join(random.choice(alphabet) for _ in range(2**10))
-corpus = collections.Counter(pairwise(text))
+corpus = collections.Counter(n_wise(text, 2))
 
 
 ### DEAP Stuff ###
